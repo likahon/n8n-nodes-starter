@@ -1,0 +1,10 @@
+[
+  {
+    "id": "1772249398473",
+    "name": "Orquestadores",
+    "host": "192.168.0.111",
+    "port": "22",
+    "user": "orquestadores",
+    "password": "orquestadores"
+  }
+]

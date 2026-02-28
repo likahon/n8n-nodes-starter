@@ -1,17 +1,14 @@
 {
-	"node": "n8n-nodes-github-issues",
+	"node": "n8n-nodes-githubissues",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": ["Development", "Developer Tools"],
+	"categories": [
+		"Development"
+	],
 	"resources": {
-		"credentialDocumentation": [
-			{
-				"url": "https://github.com/org/repo?tab=readme-ov-file#credentials"
-			}
-		],
 		"primaryDocumentation": [
 			{
-				"url": "https://github.com/org/repo?tab=readme-ov-file"
+				"url": ""
 			}
 		]
 	}

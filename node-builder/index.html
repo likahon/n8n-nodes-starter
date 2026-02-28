@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Node Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css">
+</head>
+<body>
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">⬡</span>
+                <span class="logo-text">Node Builder</span>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="editor">
+                <span class="nav-icon">✦</span> Editor
+            </button>
+            <button class="nav-item" data-section="deploy">
+                <span class="nav-icon">↑</span> Importar
+            </button>
+            <button class="nav-item" data-section="servers">
+                <span class="nav-icon">⊡</span> Servidores
+            </button>
+            <button class="nav-item" data-section="ssh">
+                <span class="nav-icon">⌨</span> SSH
+            </button>
+        </nav>
+
+        <!-- Nodos (solo visible en editor) -->
+        <div id="nodes-panel" class="nodes-panel">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar nodo...">
+            </div>
+            <div class="node-section">
+                <p class="section-label">MIS NODOS</p>
+                <ul id="custom-nodes-list" class="node-list"></ul>
+            </div>
+            <div class="node-section">
+                <p class="section-label">N8N CORE</p>
+                <ul id="core-nodes-list" class="node-list"></ul>
+            </div>
+            <div class="sidebar-footer">
+                <button id="new-node-btn" class="btn-new" onclick="createNewNode()">+ Nuevo nodo</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- ── SECCIÓN: EDITOR ── -->
+        <section id="section-editor" class="section active">
+            <div id="empty-state" class="empty-state">
+                <div class="empty-icon">⬡</div>
+                <h2>Seleccioná un nodo</h2>
+                <p>Elegí un nodo existente para editarlo o usarlo como base, o creá uno nuevo.</p>
+                <button onclick="createNewNode()" class="btn-primary">+ Crear nodo nuevo</button>
+            </div>
+
+            <div id="node-editor" class="node-editor hidden">
+                <div class="editor-topbar">
+                    <div class="editor-breadcrumb">
+                        <span id="editor-badge" class="badge">Nuevo</span>
+                        <span id="editor-title">Sin título</span>
+                    </div>
+                    <div class="editor-actions">
+                        <button class="btn-primary" onclick="saveNode()">Guardar nodo</button>
+                    </div>
+                </div>
+
+                <div class="editor-body">
+                    <div class="editor-form">
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">Información básica</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nombre visible</label>
+                                    <input type="text" id="displayName" placeholder="Mi Nodo">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombre interno</label>
+                                    <input type="text" id="name" placeholder="miNodo">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea id="description" placeholder="¿Qué hace este nodo?"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Categoría</label>
+                                    <select id="category">
+                                        <option value="input">Input</option>
+                                        <option value="transform">Transform</option>
+                                        <option value="output">Output</option>
+                                        <option value="flow">Flow</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Base URL (opcional)</label>
+                                    <input type="text" id="baseUrl" placeholder="https://api.ejemplo.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="section-toggle-header">
+                                <h3 class="form-section-title">Autenticación</h3>
+                                <label class="toggle">
+                                    <input type="checkbox" id="has-auth">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div id="auth-container" class="collapsible hidden">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select id="auth-type">
+                                        <option value="apiKey">API Key</option>
+                                        <option value="oauth2">OAuth2</option>
+                                        <option value="basic">Basic Auth</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="section-toggle-header">
+                                <h3 class="form-section-title">Operaciones HTTP</h3>
+                                <label class="toggle">
+                                    <input type="checkbox" id="has-operations">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div id="operations-container" class="collapsible hidden">
+                                <div id="operations-list"></div>
+                                <button class="btn-add" onclick="addOperation()">+ Agregar operación</button>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">Propiedades</h3>
+                            <div id="properties-list"></div>
+                            <button class="btn-add" onclick="addProperty()">+ Agregar propiedad</button>
+                        </div>
+
+                    </div>
+
+                    <div class="code-panel">
+                        <div class="code-panel-header">
+                            <span>TypeScript generado</span>
+                            <button class="btn-copy" onclick="copyCode()">Copiar</button>
+                        </div>
+                        <pre class="code-block"><code id="generated-code">// El código aparecerá aquí</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECCIÓN: IMPORTAR ── -->
+        <section id="section-deploy" class="section hidden">
+            <div class="section-topbar">
+                <h2>Importar nodos</h2>
+                <p>Seleccioná los nodos y el servidor destino, luego ejecutá el build.</p>
+            </div>
+
+            <div class="deploy-body">
+                <div class="deploy-left">
+
+                    <div class="panel">
+                        <h3 class="panel-title">Nodos a importar</h3>
+                        <div id="deploy-nodes-list" class="deploy-list"></div>
+                    </div>
+
+                    <div class="panel">
+                        <h3 class="panel-title">Servidor destino</h3>
+                        <div id="deploy-servers-list" class="deploy-list"></div>
+                        <p class="hint">Si no hay servidores, configuralos en la sección <strong>Servidores</strong>.</p>
+                    </div>
+
+                    <button class="btn-deploy" onclick="runDeploy()">↑ Importar seleccionados</button>
+                </div>
+
+                <div class="deploy-right">
+                    <div class="panel panel-log">
+                        <div class="panel-title-row">
+                            <h3 class="panel-title">Output del build</h3>
+                            <button class="btn-ghost-sm" onclick="clearLog()">Limpiar</button>
+                        </div>
+                        <pre id="build-log" class="build-log">// El output aparecerá aquí...</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECCIÓN: SERVIDORES ── -->
+        <section id="section-servers" class="section hidden">
+            <div class="section-topbar">
+                <h2>Servidores</h2>
+                <p>Configurá los servidores donde querés importar tus nodos.</p>
+            </div>
+
+            <div class="servers-body">
+                <div class="servers-list-panel">
+                    <div id="servers-list" class="servers-list"></div>
+                    <button class="btn-add-server" onclick="newServer()">+ Agregar servidor</button>
+                </div>
+
+                <div class="server-form-panel" id="server-form-panel">
+                    <div id="server-form-empty" class="server-form-empty">
+                        <p>Seleccioná un servidor o creá uno nuevo</p>
+                    </div>
+
+                    <div id="server-form" class="hidden">
+                        <div class="form-section">
+                            <h3 class="form-section-title">Datos del servidor</h3>
+                            <div class="form-group">
+                                <label>Nombre <span class="required">*</span></label>
+                                <input type="text" id="srv-name" placeholder="Producción">
+                            </div>
+                            <div class="form-group">
+                                <label>URL de n8n <span class="required">*</span></label>
+                                <input type="text" id="srv-host" placeholder="https://n8n.miempresa.com">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="section-toggle-header">
+                                <h3 class="form-section-title">Path del proyecto</h3>
+                                <label class="toggle">
+                                    <input type="checkbox" id="srv-has-path">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div id="path-container" class="collapsible hidden">
+                                <div class="form-group">
+                                    <input type="text" id="srv-path" placeholder="/home/user/n8n-nodes">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="section-toggle-header">
+                                <h3 class="form-section-title">Conexión</h3>
+                                <button class="btn-ghost" onclick="testConnection()">Testear conexión</button>
+                            </div>
+                            <div id="connection-status" class="connection-status hidden"></div>
+                        </div>
+
+                        <div class="server-form-actions">
+                            <button class="btn-ghost" onclick="deleteServer()" id="btn-delete-server">Eliminar</button>
+                            <button class="btn-primary" id="btn-save-server" onclick="saveServer()" disabled>Guardar servidor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECCIÓN: SSH ── -->
+        <section id="section-ssh" class="section hidden">
+            <div class="section-topbar">
+                <h2>SSH</h2>
+                <p>Gestioná conexiones SSH y accedé a una terminal remota.</p>
+            </div>
+            <div class="ssh-body">
+                <!-- Gestor de conexiones -->
+                <div class="ssh-sidebar">
+                    <div class="ssh-connections" id="ssh-connections-list"></div>
+                    <button class="btn-add-server" onclick="newSshConnection()">+ Nueva conexión</button>
+                </div>
+
+                <!-- Panel derecho: form + terminal -->
+                <div class="ssh-main">
+
+                    <div id="ssh-form-empty" class="server-form-empty">
+                        <p>Seleccioná una conexión o creá una nueva</p>
+                    </div>
+
+                    <div id="ssh-panel" class="hidden">
+                        <!-- Form conexión -->
+                        <div class="ssh-form-bar">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" id="ssh-name" placeholder="Mi servidor">
+                            </div>
+                            <div class="form-group">
+                                <label>Host</label>
+                                <input type="text" id="ssh-host" placeholder="192.168.1.100 o mi.servidor.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Puerto</label>
+                                <input type="text" id="ssh-port" placeholder="22" style="width:80px">
+                            </div>
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <input type="text" id="ssh-user" placeholder="ubuntu">
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <input type="password" id="ssh-password" placeholder="••••••••">
+                            </div>
+                            <div class="ssh-form-actions">
+                                <button class="btn-remove" id="btn-delete-ssh" onclick="deleteSshConnection()">Eliminar</button>
+                                <button class="btn-ghost" onclick="saveSshConnection()">Guardar</button>
+                                <button class="btn-primary" id="btn-ssh-connect" onclick="sshConnect()">Conectar</button>
+                            </div>
+                        </div>
+
+                        <!-- Terminal -->
+                        <div class="terminal-container">
+                            <div class="terminal-topbar">
+                                <span id="terminal-status" class="terminal-status">Desconectado</span>
+                                <button class="btn-ghost-sm" id="btn-ssh-disconnect" onclick="sshDisconnect()" style="display:none">Desconectar</button>
+                            </div>
+                            <div id="terminal" class="terminal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Modal: usar nodo core como base -->
+<div id="core-modal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-icon">⬡</div>
+        <h3 id="modal-node-name">HttpRequest</h3>
+        <p>Este es un nodo oficial de n8n. ¿Querés usarlo como base para crear uno nuevo?</p>
+        <div class="modal-actions">
+            <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="useAsBase()">Usar como base</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
