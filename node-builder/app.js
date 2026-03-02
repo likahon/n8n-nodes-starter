@@ -17,39 +17,6 @@ const CORE_NODES = [
     { name: 'Compression', category: 'transform' },
 ];
 
-const CORE_TEMPLATES = {
-    HttpRequest: {
-        category: 'input', baseUrl: 'https://api.example.com',
-        hasAuth: true, authType: 'apiKey', hasOperations: true,
-        operations: [
-            { name: 'Get', method: 'GET', url: '/resource/{{$parameter.id}}' },
-            { name: 'Get All', method: 'GET', url: '/resource' },
-            { name: 'Create', method: 'POST', url: '/resource' },
-            { name: 'Update', method: 'PUT', url: '/resource/{{$parameter.id}}' },
-            { name: 'Delete', method: 'DELETE', url: '/resource/{{$parameter.id}}' },
-        ],
-        properties: [{ displayName: 'Resource ID', name: 'id', type: 'string', default: '', description: 'ID of the resource' }],
-    },
-    Set: {
-        category: 'transform',
-        properties: [
-            { displayName: 'Field Name', name: 'fieldName', type: 'string', default: '', description: 'Name of the field to set' },
-            { displayName: 'Field Value', name: 'fieldValue', type: 'string', default: '', description: 'Value to set' },
-        ],
-    },
-    Code: {
-        category: 'transform',
-        properties: [{ displayName: 'Code', name: 'code', type: 'string', default: 'return items;', description: 'Code to execute' }],
-    },
-    If: {
-        category: 'flow',
-        properties: [
-            { displayName: 'Field', name: 'field', type: 'string', default: '', description: 'Field to evaluate' },
-            { displayName: 'Value', name: 'value', type: 'string', default: '', description: 'Value to compare' },
-        ],
-    },
-};
-
 const state = {
     properties: [],
     operations: [],
@@ -60,7 +27,18 @@ const state = {
 };
 
 // ── Init ──
+// ── Theme ──
+function toggleTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('theme-switch').checked = true;
+    }
     setupNav();
     renderCoreNodes();
     loadCustomNodes();
@@ -110,13 +88,38 @@ function renderCustomNodes(nodes, filter = '') {
     list.innerHTML = '';
     nodes.filter(n => n.toLowerCase().includes(filter.toLowerCase())).forEach(name => {
         const li = document.createElement('li');
-        li.textContent = name;
-        li.addEventListener('click', () => loadCustomNode(name));
+        li.innerHTML = `<span class="node-name">${name}</span><button class="btn-node-delete" onclick="deleteCustomNode(event,'${name}')" title="Eliminar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`;
+        li.querySelector('.node-name').addEventListener('click', () => loadCustomNode(name));
         list.appendChild(li);
     });
 }
 
+// ── Confirm modal ──
+let _confirmResolve = null;
+function showConfirm(message, title = 'Confirmar') {
+    document.getElementById('confirm-title').textContent = title;
+    document.getElementById('confirm-message').textContent = message;
+    document.getElementById('confirm-modal').classList.remove('hidden');
+    return new Promise(res => { _confirmResolve = res; });
+}
+function confirmResolve(val) {
+    document.getElementById('confirm-modal').classList.add('hidden');
+    if (_confirmResolve) { _confirmResolve(val); _confirmResolve = null; }
+}
+window.confirmResolve = confirmResolve;
+
+function deleteCustomNode(e, name) {
+    e.stopPropagation();
+    showConfirm(`¿Eliminás el nodo "${name}"? Esta acción no se puede deshacer.`, 'Eliminar nodo')
+        .then(ok => { if (ok) fetch(`/api/nodes/delete/${name}`, { method: 'POST' }).then(() => loadCustomNodes()); });
+}
+
 function setupEditorListeners() {
+    document.getElementById('json-import-input').addEventListener('input', () => {
+        const raw = document.getElementById('json-import-input').value.trim();
+        if (!raw) return;
+        try { JSON.parse(raw); applyNodeJson(); } catch { /* JSON incompleto, esperar */ }
+    });
     document.getElementById('search-input').addEventListener('input', e => {
         renderCoreNodes(e.target.value);
         renderCustomNodes(state.customNodes, e.target.value);
@@ -139,33 +142,100 @@ function setupEditorListeners() {
     });
 }
 
-// ── Modal core ──
+// ── Core node: vista read-only con properties reales ──
 function openCoreModal(name) {
     state.selectedCoreNode = name;
-    document.getElementById('modal-node-name').textContent = name;
-    document.getElementById('core-modal').classList.remove('hidden');
+    state.properties = []; state.operations = [];
+    clearForm();
+
+    document.getElementById('node-editor').classList.add('editor-readonly');
+    document.getElementById('core-banner').classList.remove('hidden');
+    document.getElementById('core-banner-name').textContent = name;
+    document.getElementById('empty-state').classList.add('hidden');
+    document.getElementById('node-editor').classList.remove('hidden');
+    document.querySelector('.code-panel-header span').textContent = 'TypeScript generado';
+    const badge = document.getElementById('editor-badge');
+    badge.textContent = 'Core n8n'; badge.className = 'badge';
+
+    document.querySelectorAll('#core-nodes-list li').forEach(li =>
+        li.classList.toggle('active', li.textContent === name));
+
+    fetch(`/api/nodes/official/${name}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('displayName').value = data.displayName || name;
+            document.getElementById('name').value = data.name || name.toLowerCase();
+            document.getElementById('description').value = data.description || '';
+            document.getElementById('category').value = (data.group || ['input'])[0];
+            document.getElementById('editor-title').textContent = data.displayName || name;
+            // Mostrar properties como cards read-only
+            document.getElementById('properties-list').innerHTML = '';
+            state.properties = [];
+            (data.properties || []).forEach(p => addCoreProperty(p));
+            generateCode();
+        })
+        .catch(() => {
+            document.getElementById('displayName').value = name;
+            document.getElementById('editor-title').textContent = name;
+        });
 }
-function closeModal() {
-    document.getElementById('core-modal').classList.add('hidden');
-    state.selectedCoreNode = null;
+
+function addCoreProperty(p) {
+    const div = document.createElement('div');
+    div.className = 'prop-card';
+    const def = typeof p.default === 'object' ? JSON.stringify(p.default) : String(p.default ?? '');
+    const desc = typeof p.description === 'string' ? p.description.replace(/<[^>]*>/g, '') : '';
+    const optionsHtml = p.options ? `<div class="form-group"><label>Opciones</label><input type="text" value="${escHtml((Array.isArray(p.options)?p.options:[]).map(o=>o.value||o).join(', '))}" readonly></div>` : '';
+    div.innerHTML = `
+        <div class="card-header"><span>${escHtml(p.displayName || p.name)}</span><span class="prop-type-badge">${escHtml(p.type)}</span></div>
+        <div class="form-row">
+            <div class="form-group"><label>Nombre interno</label><input type="text" value="${escHtml(p.name)}" readonly></div>
+            <div class="form-group"><label>Default</label><input type="text" value="${escHtml(def)}" readonly></div>
+        </div>
+        ${desc ? `<div class="form-group"><label>Descripción</label><input type="text" value="${escHtml(desc)}" readonly></div>` : ''}
+        ${optionsHtml}`;
+    document.getElementById('properties-list').appendChild(div);
 }
+
 function useAsBase() {
     const name = state.selectedCoreNode;
-    closeModal();
-    const tpl = CORE_TEMPLATES[name] || {};
-    fillForm({
-        displayName: `My ${name}`, name: `my${name}`,
-        description: `Custom node based on ${name}`,
-        ...tpl,
-    });
-    showEditor(name, false);
-    generateCode();
+    state.properties = []; state.operations = [];
+    clearForm();
+
+    document.getElementById('node-editor').classList.remove('editor-readonly');
+    document.getElementById('core-banner').classList.add('hidden');
+    document.querySelector('.code-panel-header span').textContent = 'TypeScript generado';
+    const badge = document.getElementById('editor-badge');
+    badge.textContent = 'Nuevo'; badge.className = 'badge';
+
+    // Cargar las properties reales del nodo core y pre-llenar el form
+    fetch(`/api/nodes/official/${name}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('displayName').value = `My ${name}`;
+            document.getElementById('name').value = `my${name}`;
+            document.getElementById('description').value = data.description || '';
+            document.getElementById('category').value = (data.group || ['input'])[0];
+            document.getElementById('editor-title').textContent = `My ${name}`;
+            (data.properties || []).forEach(p => addProperty(p));
+            generateCode();
+        })
+        .catch(() => {
+            document.getElementById('displayName').value = `My ${name}`;
+            document.getElementById('name').value = `my${name}`;
+            document.getElementById('editor-title').textContent = `My ${name}`;
+            generateCode();
+        });
 }
 
 // ── Editor: CRUD ──
 function createNewNode() {
+    state.selectedCoreNode = null;
     state.properties = []; state.operations = [];
     clearForm();
+    document.getElementById('node-editor').classList.remove('editor-readonly');
+    document.getElementById('core-banner').classList.add('hidden');
+    document.querySelector('.code-panel-header span').textContent = 'TypeScript generado';
     showEditor('Nuevo Nodo', false);
     generateCode();
 }
@@ -174,17 +244,25 @@ function loadCustomNode(name) {
     fetch(`/api/nodes/${name}`)
         .then(r => r.json())
         .then(data => {
+            state.selectedCoreNode = null;
             state.properties = []; state.operations = [];
             clearForm();
             fillForm(data);
+            document.getElementById('node-editor').classList.remove('editor-readonly');
+            document.getElementById('core-banner').classList.add('hidden');
+            document.querySelector('.code-panel-header span').textContent = 'TypeScript generado';
             showEditor(name, true);
             generateCode();
         })
         .catch(() => {
+            state.selectedCoreNode = null;
             state.properties = []; state.operations = [];
             clearForm();
             document.getElementById('displayName').value = name;
             document.getElementById('name').value = name.toLowerCase();
+            document.getElementById('node-editor').classList.remove('editor-readonly');
+            document.getElementById('core-banner').classList.add('hidden');
+            document.querySelector('.code-panel-header span').textContent = 'TypeScript generado';
             showEditor(name, true);
             generateCode();
         });
@@ -231,13 +309,33 @@ function fillForm(data) {
     (data.properties || []).forEach(p => addProperty(p));
 }
 
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 // ── Propiedades ──
 function addProperty(data = null) {
-    const prop = data || { displayName: '', name: '', type: 'string', default: '', description: '' };
+    const prop = data || { displayName: '', name: '', type: 'string', default: '', description: '', options: [] };
+    if (!prop.options) prop.options = [];
+    // Serializar default si es objeto
+    if (typeof prop.default === 'object') prop.default = JSON.stringify(prop.default);
+    prop.default = String(prop.default ?? '');
+    prop.description = typeof prop.description === 'string' ? prop.description.replace(/<[^>]*>/g, '') : '';
     state.properties.push(prop);
     const idx = state.properties.length - 1;
     const div = document.createElement('div');
     div.className = 'prop-card';
+
+    const allTypes = ['string','number','boolean','options','multiOptions','collection','fixedCollection','json','filter','dateTime'];
+    const typeOptions = allTypes.map(t => `<option value="${t}" ${prop.type===t?'selected':''}>${t}</option>`).join('');
+
+    const hasOptions = ['options','multiOptions'].includes(prop.type);
+    const optionsHtml = hasOptions ? `
+        <div class="form-group" id="options-group-${idx}">
+            <label>Opciones (una por línea: valor|Nombre visible)</label>
+            <textarea oninput="updatePropOptions(${idx}, this.value)" rows="4">${(prop.options||[]).map(o => typeof o === 'object' ? o.value+'|'+o.name : o).join('\n')}</textarea>
+        </div>` : `<div id="options-group-${idx}"></div>`;
+
     div.innerHTML = `
         <div class="card-header">
             <span>Propiedad ${idx + 1}</span>
@@ -245,20 +343,45 @@ function addProperty(data = null) {
         </div>
         <div class="form-row">
             <div class="form-group"><label>Nombre visible</label>
-                <input type="text" value="${prop.displayName}" oninput="updateProp(${idx},'displayName',this.value)"></div>
+                <input type="text" value="${escHtml(prop.displayName)}" oninput="updateProp(${idx},'displayName',this.value)"></div>
             <div class="form-group"><label>Nombre interno</label>
-                <input type="text" value="${prop.name}" oninput="updateProp(${idx},'name',this.value)"></div>
+                <input type="text" value="${escHtml(prop.name)}" oninput="updateProp(${idx},'name',this.value)"></div>
         </div>
         <div class="form-row">
             <div class="form-group"><label>Tipo</label>
-                <select onchange="updateProp(${idx},'type',this.value)">
-                    ${['string','number','boolean','options','collection'].map(t =>
-                        `<option value="${t}" ${prop.type===t?'selected':''}>${t}</option>`).join('')}
-                </select></div>
-            <div class="form-group"><label>Descripción</label>
-                <input type="text" value="${prop.description}" oninput="updateProp(${idx},'description',this.value)"></div>
-        </div>`;
+                <select onchange="updatePropType(${idx}, this.value)">${typeOptions}</select></div>
+            <div class="form-group"><label>Default</label>
+                <input type="text" value="${escHtml(prop.default)}" oninput="updateProp(${idx},'default',this.value)"></div>
+        </div>
+        <div class="form-group"><label>Descripción</label>
+            <input type="text" value="${escHtml(prop.description)}" oninput="updateProp(${idx},'description',this.value)"></div>
+        ${optionsHtml}`;
     document.getElementById('properties-list').appendChild(div);
+}
+
+function updatePropType(idx, value) {
+    if (!state.properties[idx]) return;
+    state.properties[idx].type = value;
+    state.properties[idx].options = state.properties[idx].options || [];
+    // Re-render solo la prop card
+    const list = document.getElementById('properties-list');
+    const cards = list.querySelectorAll('.prop-card');
+    if (cards[idx]) {
+        const copy = [...state.properties];
+        state.properties = [];
+        document.getElementById('properties-list').innerHTML = '';
+        copy.forEach(p => addProperty(p));
+    }
+    generateCode();
+}
+
+function updatePropOptions(idx, text) {
+    if (!state.properties[idx]) return;
+    state.properties[idx].options = text.split('\n').filter(l => l.trim()).map(l => {
+        const [value, name] = l.split('|');
+        return { value: value.trim(), name: (name || value).trim() };
+    });
+    generateCode();
 }
 
 function updateProp(idx, field, value) {
@@ -357,14 +480,19 @@ function getFormData() {
 
 function buildCode(d) {
     const cls = d.name ? d.name.charAt(0).toUpperCase() + d.name.slice(1) : 'MyNode';
-    const propsCode = d.properties.map(p => `
+    const propsCode = d.properties.map(p => {
+        const optionsCode = (p.options && p.options.length) ? `,
+            options: [${p.options.map(o => `
+                { name: '${(o.name||o.value||o).toString().replace(/'/g,"\\'")}'  , value: '${(o.value||o).toString().replace(/'/g,"\\'")}'  }`).join(',')}\n            ]` : '';
+        return `
         {
             displayName: '${p.displayName}',
             name: '${p.name}',
             type: '${p.type}',
             default: '${p.default || ''}',
-            description: '${p.description}',
-        }`).join(',');
+            description: '${p.description || ''}',${optionsCode}
+        }`;
+    }).join(',');
     const opsCode = d.hasOperations && d.operations.length ? `
         {
             displayName: 'Operation',
@@ -642,9 +770,10 @@ window.addOperation = addOperation;
 window.removeProperty = removeProperty;
 window.removeOperation = removeOperation;
 window.updateProp = updateProp;
+window.updatePropType = updatePropType;
+window.updatePropOptions = updatePropOptions;
 window.updateOp = updateOp;
 window.createNewNode = createNewNode;
-window.closeModal = closeModal;
 window.useAsBase = useAsBase;
 window.saveNode = saveNode;
 window.generateCode = generateCode;
@@ -835,7 +964,69 @@ function setTerminalStatus(connected) {
     renderSshList();
 }
 
-window.newSshConnection = newSshConnection;
+// ── JSON Import ──
+function applyNodeJson() {
+    const raw = document.getElementById('json-import-input').value.trim();
+    if (!raw) return;
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch { return; }
+
+    let node = parsed;
+    if (parsed.nodes?.length > 0) node = parsed.nodes[0];
+    else if (Array.isArray(parsed) && parsed.length > 0) node = parsed[0];
+
+    const params = node.parameters || {};
+
+    if (node.name) {
+        document.getElementById('displayName').value = node.name;
+        const internal = node.name.replace(/\s+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, c => c.toLowerCase()).replace(/[^a-z0-9]/gi, '');
+        document.getElementById('name').value = internal;
+        document.getElementById('editor-title').textContent = node.name;
+    }
+
+    state.properties = []; state.operations = [];
+    document.getElementById('properties-list').innerHTML = '';
+    document.getElementById('operations-list').innerHTML = '';
+    document.getElementById('has-auth').checked = false;
+    document.getElementById('auth-container').classList.add('hidden');
+    document.getElementById('has-operations').checked = false;
+    document.getElementById('operations-container').classList.add('hidden');
+    document.getElementById('baseUrl').value = '';
+
+    const SIMPLE = (v) => typeof v === 'string' || typeof v === 'boolean' || typeof v === 'number';
+
+    Object.entries(params).forEach(([key, value]) => {
+        if (key === 'options' && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) return;
+        if (key === 'method' || key === 'url') return;
+
+        if (SIMPLE(value)) {
+            const type = typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : 'string';
+            addProperty({ displayName: key, name: key, type, default: String(value), description: '' });
+        } else if ((key === 'bodyParameters' || key === 'queryParameters' || key === 'headerParameters') && value?.parameters) {
+            value.parameters.forEach(p => {
+                addProperty({ displayName: key + ': ' + p.name, name: key + '_' + p.name, type: 'string', default: p.value || '', description: '' });
+            });
+        } else {
+            addProperty({ displayName: key, name: key, type: 'json', default: JSON.stringify(value, null, 2), description: '' });
+        }
+    });
+
+    const url = params.url || '';
+    const method = params.method;
+    if (method && url) {
+        const urlMatch = url.match(/^(https?:\/\/[^/]+)/);
+        if (urlMatch) document.getElementById('baseUrl').value = urlMatch[1];
+        document.getElementById('has-operations').checked = true;
+        document.getElementById('operations-container').classList.remove('hidden');
+        addOperation({ name: node.name || method, method, url: urlMatch ? url.replace(urlMatch[1], '') || '/' : url });
+    }
+
+    generateCode();
+}
+
+window.deleteCustomNode = deleteCustomNode;
+window.applyNodeJson = applyNodeJson;
+window.toggleTheme = toggleTheme;
 window.saveSshConnection = saveSshConnection;
 window.deleteSshConnection = deleteSshConnection;
 window.sshConnect = sshConnect;

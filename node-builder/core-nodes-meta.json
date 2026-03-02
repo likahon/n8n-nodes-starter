@@ -1,0 +1,3326 @@
+{
+  "HttpRequest": {
+    "displayName": "HTTP Request",
+    "name": "httpRequest",
+    "group": [
+      "output"
+    ],
+    "description": "Makes an HTTP request and returns the response data",
+    "properties": [
+      {
+        "displayName": "Method",
+        "name": "method",
+        "type": "options",
+        "default": "GET",
+        "description": "The request method to use",
+        "options": [
+          {
+            "name": "DELETE",
+            "value": "DELETE"
+          },
+          {
+            "name": "GET",
+            "value": "GET"
+          },
+          {
+            "name": "HEAD",
+            "value": "HEAD"
+          },
+          {
+            "name": "OPTIONS",
+            "value": "OPTIONS"
+          },
+          {
+            "name": "PATCH",
+            "value": "PATCH"
+          },
+          {
+            "name": "POST",
+            "value": "POST"
+          },
+          {
+            "name": "PUT",
+            "value": "PUT"
+          }
+        ]
+      },
+      {
+        "displayName": "URL",
+        "name": "url",
+        "type": "string",
+        "default": "",
+        "description": "The URL to make the request to"
+      },
+      {
+        "displayName": "Authentication",
+        "name": "authentication",
+        "type": "options",
+        "default": "none",
+        "description": "",
+        "options": [
+          {
+            "name": "None",
+            "value": "none"
+          },
+          {
+            "name": "Predefined Credential Type",
+            "value": "predefinedCredentialType"
+          },
+          {
+            "name": "Generic Credential Type",
+            "value": "genericCredentialType"
+          }
+        ]
+      },
+      {
+        "displayName": "SSL Certificates",
+        "name": "provideSslCertificates",
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      {
+        "displayName": "Send Query Parameters",
+        "name": "sendQuery",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the request has query params or not"
+      },
+      {
+        "displayName": "Specify Query Parameters",
+        "name": "specifyQuery",
+        "type": "options",
+        "default": "keypair",
+        "description": "",
+        "options": [
+          {
+            "name": "Using Fields Below",
+            "value": "keypair"
+          },
+          {
+            "name": "Using JSON",
+            "value": "json"
+          }
+        ]
+      },
+      {
+        "displayName": "Query Parameters",
+        "name": "queryParameters",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "JSON",
+        "name": "jsonQuery",
+        "type": "json",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Send Headers",
+        "name": "sendHeaders",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the request has headers or not"
+      },
+      {
+        "displayName": "Specify Headers",
+        "name": "specifyHeaders",
+        "type": "options",
+        "default": "keypair",
+        "description": "",
+        "options": [
+          {
+            "name": "Using Fields Below",
+            "value": "keypair"
+          },
+          {
+            "name": "Using JSON",
+            "value": "json"
+          }
+        ]
+      },
+      {
+        "displayName": "Headers",
+        "name": "headerParameters",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "JSON",
+        "name": "jsonHeaders",
+        "type": "json",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Send Body",
+        "name": "sendBody",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the request has a body or not"
+      },
+      {
+        "displayName": "Body Content Type",
+        "name": "contentType",
+        "type": "options",
+        "default": "json",
+        "description": "Content-Type to use to send body parameters",
+        "options": [
+          {
+            "name": "Form Urlencoded",
+            "value": "form-urlencoded"
+          },
+          {
+            "name": "Form-Data",
+            "value": "multipart-form-data"
+          },
+          {
+            "name": "JSON",
+            "value": "json"
+          },
+          {
+            "name": "n8n Binary File",
+            "value": "binaryData"
+          },
+          {
+            "name": "Raw",
+            "value": "raw"
+          }
+        ]
+      },
+      {
+        "displayName": "Specify Body",
+        "name": "specifyBody",
+        "type": "options",
+        "default": "keypair",
+        "description": "The body can be specified using explicit fields (<code>keypair</code>) or using a JavaScript object (<code>json</code>)",
+        "options": [
+          {
+            "name": "Using Fields Below",
+            "value": "keypair"
+          },
+          {
+            "name": "Using JSON",
+            "value": "json"
+          }
+        ]
+      },
+      {
+        "displayName": "Body Parameters",
+        "name": "bodyParameters",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "JSON",
+        "name": "jsonBody",
+        "type": "json",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Body",
+        "name": "bodyParameters",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Specify Body",
+        "name": "specifyBody",
+        "type": "options",
+        "default": "keypair",
+        "description": "",
+        "options": [
+          {
+            "name": "Using Fields Below",
+            "value": "keypair"
+          },
+          {
+            "name": "Using Single Field",
+            "value": "string"
+          }
+        ]
+      },
+      {
+        "displayName": "Body Fields",
+        "name": "bodyParameters",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Body",
+        "name": "body",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Input Data Field Name",
+        "name": "inputDataFieldName",
+        "type": "string",
+        "default": "",
+        "description": "The name of the incoming field containing the binary file data to be processed"
+      },
+      {
+        "displayName": "Content Type",
+        "name": "rawContentType",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Body",
+        "name": "body",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Optimize Response",
+        "name": "optimizeResponse",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the optimize the tool response to reduce amount of data passed to the LLM that could lead to better result and reduce cost"
+      },
+      {
+        "displayName": "Expected Response Type",
+        "name": "responseType",
+        "type": "options",
+        "default": "json",
+        "description": "",
+        "options": [
+          {
+            "name": "JSON",
+            "value": "json"
+          },
+          {
+            "name": "HTML",
+            "value": "html"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      },
+      {
+        "displayName": "Field Containing Data",
+        "name": "dataField",
+        "type": "string",
+        "default": "",
+        "description": "Specify the name of the field in the response containing the data"
+      },
+      {
+        "displayName": "Include Fields",
+        "name": "fieldsToInclude",
+        "type": "options",
+        "default": "all",
+        "description": "What fields response object should include",
+        "options": [
+          {
+            "name": "All",
+            "value": "all"
+          },
+          {
+            "name": "Selected",
+            "value": "selected"
+          },
+          {
+            "name": "Except",
+            "value": "except"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields",
+        "name": "fields",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of the field names. Supports dot notation. You can drag the selected fields from the input panel."
+      },
+      {
+        "displayName": "Selector (CSS)",
+        "name": "cssSelector",
+        "type": "string",
+        "default": "body",
+        "description": "Select specific element(e.g. body) or multiple elements(e.g. div) of chosen type in the response HTML."
+      },
+      {
+        "displayName": "Return Only Content",
+        "name": "onlyContent",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether to return only content of html elements, stripping html tags and attributes"
+      },
+      {
+        "displayName": "Elements To Omit",
+        "name": "elementsToOmit",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of selectors that would be excluded when extracting content"
+      },
+      {
+        "displayName": "Truncate Response",
+        "name": "truncateResponse",
+        "type": "boolean",
+        "default": "false",
+        "description": ""
+      },
+      {
+        "displayName": "Max Response Characters",
+        "name": "maxLength",
+        "type": "number",
+        "default": "1000",
+        "description": ""
+      }
+    ]
+  },
+  "Set": {
+    "displayName": "Edit Fields (Set)",
+    "name": "set",
+    "group": [
+      "input"
+    ],
+    "description": "Modify, add, or remove item fields",
+    "properties": [
+      {
+        "displayName": "Mode",
+        "name": "mode",
+        "type": "options",
+        "default": "manual",
+        "description": "",
+        "options": [
+          {
+            "name": "Manual Mapping",
+            "value": "manual"
+          },
+          {
+            "name": "JSON",
+            "value": "raw"
+          }
+        ]
+      },
+      {
+        "displayName": "Duplicate Item",
+        "name": "duplicateItem",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether this item should be duplicated a set number of times"
+      },
+      {
+        "displayName": "Duplicate Item Count",
+        "name": "duplicateCount",
+        "type": "number",
+        "default": "0",
+        "description": "How many times the item should be duplicated, mainly used for testing and debugging"
+      },
+      {
+        "displayName": "JSON",
+        "name": "jsonOutput",
+        "type": "json",
+        "default": "{\n  \"my_field_1\": \"value\",\n  \"my_field_2\": 1\n}\n",
+        "description": ""
+      },
+      {
+        "displayName": "Fields to Set",
+        "name": "fields",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "Edit existing fields or add new ones to modify the output data",
+        "options": []
+      },
+      {
+        "displayName": "Fields to Set",
+        "name": "assignments",
+        "type": "assignmentCollection",
+        "default": "[object Object]",
+        "description": ""
+      },
+      {
+        "displayName": "Include in Output",
+        "name": "include",
+        "type": "options",
+        "default": "all",
+        "description": "How to select the fields you want to include in your output items",
+        "options": [
+          {
+            "name": "All Input Fields",
+            "value": "all"
+          },
+          {
+            "name": "No Input Fields",
+            "value": "none"
+          },
+          {
+            "name": "Selected Input Fields",
+            "value": "selected"
+          },
+          {
+            "name": "All Input Fields Except",
+            "value": "except"
+          }
+        ]
+      },
+      {
+        "displayName": "Include Other Input Fields",
+        "name": "includeOtherFields",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether to pass to the output all the input fields (along with the fields set in 'Fields to Set')"
+      },
+      {
+        "displayName": "Input Fields to Include",
+        "name": "include",
+        "type": "options",
+        "default": "all",
+        "description": "How to select the fields you want to include in your output items",
+        "options": [
+          {
+            "name": "All",
+            "value": "all"
+          },
+          {
+            "name": "Selected",
+            "value": "selected"
+          },
+          {
+            "name": "All Except",
+            "value": "except"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields to Include",
+        "name": "includeFields",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of the field names you want to include in the output. You can drag the selected fields from the input panel."
+      },
+      {
+        "displayName": "Fields to Exclude",
+        "name": "excludeFields",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of the field names you want to exclude from the output. You can drag the selected fields from the input panel."
+      },
+      {
+        "displayName": "Fields to Include",
+        "name": "includeFields",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of the field names you want to include in the output. You can drag the selected fields from the input panel."
+      },
+      {
+        "displayName": "Fields to Exclude",
+        "name": "excludeFields",
+        "type": "string",
+        "default": "",
+        "description": "Comma-separated list of the field names you want to exclude from the output. You can drag the selected fields from the input panel."
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Code": {
+    "displayName": "Code",
+    "name": "code",
+    "group": [
+      "transform"
+    ],
+    "description": "Run custom JavaScript or Python code",
+    "properties": [
+      {
+        "displayName": "Mode",
+        "name": "mode",
+        "type": "options",
+        "default": "runOnceForAllItems",
+        "description": "",
+        "options": [
+          {
+            "name": "Run Once for All Items",
+            "value": "runOnceForAllItems"
+          },
+          {
+            "name": "Run Once for Each Item",
+            "value": "runOnceForEachItem"
+          }
+        ]
+      },
+      {
+        "displayName": "Language",
+        "name": "language",
+        "type": "options",
+        "default": "javaScript",
+        "description": "",
+        "options": [
+          {
+            "name": "JavaScript",
+            "value": "javaScript"
+          },
+          {
+            "name": "Python",
+            "value": "pythonNative"
+          }
+        ]
+      },
+      {
+        "displayName": "JavaScript",
+        "name": "jsCode",
+        "type": "string",
+        "default": "",
+        "description": "JavaScript code to execute.<br><br>Tip: You can use luxon vars like <code>$today</code> for dates and <code>$jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/nodes/n8n-nodes-base.function\">Learn more</a>."
+      },
+      {
+        "displayName": "JavaScript",
+        "name": "jsCode",
+        "type": "string",
+        "default": "",
+        "description": "JavaScript code to execute.<br><br>Tip: You can use luxon vars like <code>$today</code> for dates and <code>$jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/nodes/n8n-nodes-base.function\">Learn more</a>."
+      },
+      {
+        "displayName": "JavaScript",
+        "name": "jsCode",
+        "type": "string",
+        "default": "",
+        "description": "JavaScript code to execute.<br><br>Tip: You can use luxon vars like <code>$today</code> for dates and <code>$jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/nodes/n8n-nodes-base.function\">Learn more</a>."
+      },
+      {
+        "displayName": "JavaScript",
+        "name": "jsCode",
+        "type": "string",
+        "default": "",
+        "description": "JavaScript code to execute.<br><br>Tip: You can use luxon vars like <code>$today</code> for dates and <code>$jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/nodes/n8n-nodes-base.function\">Learn more</a>."
+      },
+      {
+        "displayName": "Python",
+        "name": "pythonCode",
+        "type": "string",
+        "default": "",
+        "description": "Python code to execute.<br><br>Tip: You can use built-in methods and variables like <code>_today</code> for dates and <code>_jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/code/builtin/\">Learn more</a>."
+      },
+      {
+        "displayName": "Python",
+        "name": "pythonCode",
+        "type": "string",
+        "default": "",
+        "description": "Python code to execute.<br><br>Tip: You can use built-in methods and variables like <code>_today</code> for dates and <code>_jmespath</code> for querying JSON structures. <a href=\"https://docs.n8n.io/code/builtin/\">Learn more</a>."
+      }
+    ]
+  },
+  "If": {
+    "displayName": "If",
+    "name": "if",
+    "group": [
+      "transform"
+    ],
+    "description": "Route items to different branches (true/false)",
+    "properties": [
+      {
+        "displayName": "Conditions",
+        "name": "conditions",
+        "type": "filter",
+        "default": "[object Object]",
+        "description": ""
+      },
+      {
+        "displayName": "Convert types where required",
+        "name": "looseTypeValidation",
+        "type": "boolean",
+        "default": "false",
+        "description": "If the type of an expression doesn't match the type of the comparison, n8n will try to cast the expression to the required type. E.g. for booleans <code>\"false\"</code> or <code>0</code> will be cast to <code>false</code>"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Switch": {
+    "displayName": "Switch",
+    "name": "switch",
+    "group": [
+      "transform"
+    ],
+    "description": "Route items depending on defined expression or rules",
+    "properties": [
+      {
+        "displayName": "Mode",
+        "name": "mode",
+        "type": "options",
+        "default": "rules",
+        "description": "How data should be routed",
+        "options": [
+          {
+            "name": "Rules",
+            "value": "rules"
+          },
+          {
+            "name": "Expression",
+            "value": "expression"
+          }
+        ]
+      },
+      {
+        "displayName": "Number of Outputs",
+        "name": "numberOutputs",
+        "type": "number",
+        "default": "4",
+        "description": "How many outputs to create"
+      },
+      {
+        "displayName": "Number of Outputs",
+        "name": "numberOutputs",
+        "type": "number",
+        "default": "4",
+        "description": "How many outputs to create"
+      },
+      {
+        "displayName": "Output Index",
+        "name": "output",
+        "type": "number",
+        "default": "={{}}",
+        "description": "The output index to send the input item to. Use an expression to calculate which input item should be routed to which output. The expression must return a number."
+      },
+      {
+        "displayName": "Routing Rules",
+        "name": "rules",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Convert types where required",
+        "name": "looseTypeValidation",
+        "type": "boolean",
+        "default": "false",
+        "description": "If the type of an expression doesn't match the type of the comparison, n8n will try to cast the expression to the required type. E.g. for booleans <code>\"false\"</code> or <code>0</code> will be cast to <code>false</code>"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Merge": {
+    "displayName": "Merge",
+    "name": "merge",
+    "group": [
+      "transform"
+    ],
+    "description": "Merges data of multiple streams once data from both is available",
+    "properties": [
+      {
+        "displayName": "Mode",
+        "name": "mode",
+        "type": "options",
+        "default": "append",
+        "description": "How input data should be merged",
+        "options": [
+          {
+            "name": "Append",
+            "value": "append"
+          },
+          {
+            "name": "Combine",
+            "value": "combine"
+          },
+          {
+            "name": "SQL Query",
+            "value": "combineBySql"
+          },
+          {
+            "name": "Choose Branch",
+            "value": "chooseBranch"
+          }
+        ]
+      },
+      {
+        "displayName": "Combine By",
+        "name": "combineBy",
+        "type": "options",
+        "default": "combineByFields",
+        "description": "How input data should be merged",
+        "options": [
+          {
+            "name": "Matching Fields",
+            "value": "combineByFields"
+          },
+          {
+            "name": "Position",
+            "value": "combineByPosition"
+          },
+          {
+            "name": "All Possible Combinations",
+            "value": "combineAll"
+          }
+        ]
+      },
+      {
+        "displayName": "Number of Inputs",
+        "name": "numberInputs",
+        "type": "options",
+        "default": "2",
+        "description": "The number of data inputs you want to merge. The node waits for all connected inputs to be executed.",
+        "options": [
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          },
+          {
+            "name": "4",
+            "value": "4"
+          },
+          {
+            "name": "5",
+            "value": "5"
+          },
+          {
+            "name": "6",
+            "value": "6"
+          },
+          {
+            "name": "7",
+            "value": "7"
+          },
+          {
+            "name": "8",
+            "value": "8"
+          },
+          {
+            "name": "9",
+            "value": "9"
+          },
+          {
+            "name": "10",
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields To Match Have Different Names",
+        "name": "advanced",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether name(s) of field to match are different in input 1 and input 2"
+      },
+      {
+        "displayName": "Fields to Match",
+        "name": "fieldsToMatchString",
+        "type": "string",
+        "default": "",
+        "description": "Specify the fields to use for matching input items"
+      },
+      {
+        "displayName": "Fields to Match",
+        "name": "mergeByFields",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "Specify the fields to use for matching input items",
+        "options": []
+      },
+      {
+        "displayName": "Output Type",
+        "name": "joinMode",
+        "type": "options",
+        "default": "keepMatches",
+        "description": "How to select the items to send to output",
+        "options": [
+          {
+            "name": "Keep Matches",
+            "value": "keepMatches"
+          },
+          {
+            "name": "Keep Non-Matches",
+            "value": "keepNonMatches"
+          },
+          {
+            "name": "Keep Everything",
+            "value": "keepEverything"
+          },
+          {
+            "name": "Enrich Input 1",
+            "value": "enrichInput1"
+          },
+          {
+            "name": "Enrich Input 2",
+            "value": "enrichInput2"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Data From",
+        "name": "outputDataFrom",
+        "type": "options",
+        "default": "both",
+        "description": "",
+        "options": [
+          {
+            "name": "Both Inputs Merged Together",
+            "value": "both"
+          },
+          {
+            "name": "Input 1",
+            "value": "input1"
+          },
+          {
+            "name": "Input 2",
+            "value": "input2"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Data From",
+        "name": "outputDataFrom",
+        "type": "options",
+        "default": "both",
+        "description": "",
+        "options": [
+          {
+            "name": "Both Inputs Appended Together",
+            "value": "both"
+          },
+          {
+            "name": "Input 1",
+            "value": "input1"
+          },
+          {
+            "name": "Input 2",
+            "value": "input2"
+          }
+        ]
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Number of Inputs",
+        "name": "numberInputs",
+        "type": "options",
+        "default": "2",
+        "description": "The number of data inputs you want to merge. The node waits for all connected inputs to be executed.",
+        "options": [
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          },
+          {
+            "name": "4",
+            "value": "4"
+          },
+          {
+            "name": "5",
+            "value": "5"
+          },
+          {
+            "name": "6",
+            "value": "6"
+          },
+          {
+            "name": "7",
+            "value": "7"
+          },
+          {
+            "name": "8",
+            "value": "8"
+          },
+          {
+            "name": "9",
+            "value": "9"
+          },
+          {
+            "name": "10",
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "displayName": "Query",
+        "name": "query",
+        "type": "string",
+        "default": "SELECT * FROM input1 LEFT JOIN input2 ON input1.name = input2.id",
+        "description": "Input data available as tables with corresponding number, e.g. input1, input2"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Number of Inputs",
+        "name": "numberInputs",
+        "type": "options",
+        "default": "2",
+        "description": "The number of data inputs you want to merge. The node waits for all connected inputs to be executed.",
+        "options": [
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          },
+          {
+            "name": "4",
+            "value": "4"
+          },
+          {
+            "name": "5",
+            "value": "5"
+          },
+          {
+            "name": "6",
+            "value": "6"
+          },
+          {
+            "name": "7",
+            "value": "7"
+          },
+          {
+            "name": "8",
+            "value": "8"
+          },
+          {
+            "name": "9",
+            "value": "9"
+          },
+          {
+            "name": "10",
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Number of Inputs",
+        "name": "numberInputs",
+        "type": "options",
+        "default": "2",
+        "description": "The number of data inputs you want to merge. The node waits for all connected inputs to be executed.",
+        "options": [
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          },
+          {
+            "name": "4",
+            "value": "4"
+          },
+          {
+            "name": "5",
+            "value": "5"
+          },
+          {
+            "name": "6",
+            "value": "6"
+          },
+          {
+            "name": "7",
+            "value": "7"
+          },
+          {
+            "name": "8",
+            "value": "8"
+          },
+          {
+            "name": "9",
+            "value": "9"
+          },
+          {
+            "name": "10",
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Type",
+        "name": "chooseBranchMode",
+        "type": "options",
+        "default": "waitForAll",
+        "description": "",
+        "options": [
+          {
+            "name": "Wait for All Inputs to Arrive",
+            "value": "waitForAll"
+          }
+        ]
+      },
+      {
+        "displayName": "Output",
+        "name": "output",
+        "type": "options",
+        "default": "specifiedInput",
+        "description": "",
+        "options": [
+          {
+            "name": "Data of Specified Input",
+            "value": "specifiedInput"
+          },
+          {
+            "name": "A Single, Empty Item",
+            "value": "empty"
+          }
+        ]
+      },
+      {
+        "displayName": "Use Data of Input",
+        "name": "useDataOfInput",
+        "type": "options",
+        "default": "1",
+        "description": "The number of the input to use data of"
+      }
+    ]
+  },
+  "Filter": {
+    "displayName": "Filter",
+    "name": "filter",
+    "group": [
+      "transform"
+    ],
+    "description": "Remove items matching a condition",
+    "properties": [
+      {
+        "displayName": "Conditions",
+        "name": "conditions",
+        "type": "filter",
+        "default": "[object Object]",
+        "description": ""
+      },
+      {
+        "displayName": "Convert types where required",
+        "name": "looseTypeValidation",
+        "type": "boolean",
+        "default": "false",
+        "description": "If the type of an expression doesn't match the type of the comparison, n8n will try to cast the expression to the required type. E.g. for booleans <code>\"false\"</code> or <code>0</code> will be cast to <code>false</code>"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "SplitInBatches": {
+    "displayName": "Loop Over Items (Split in Batches)",
+    "name": "splitInBatches",
+    "group": [
+      "organization"
+    ],
+    "description": "Split data into batches and iterate over each batch",
+    "properties": [
+      {
+        "displayName": "Batch Size",
+        "name": "batchSize",
+        "type": "number",
+        "default": "1",
+        "description": "The number of items to return with each call"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Wait": {
+    "displayName": "Wait",
+    "name": "wait",
+    "group": [
+      "organization"
+    ],
+    "description": "Wait before continue with execution",
+    "properties": [
+      {
+        "displayName": "Resume",
+        "name": "resume",
+        "type": "options",
+        "default": "timeInterval",
+        "description": "Determines the waiting mode to use before the workflow continues",
+        "options": [
+          {
+            "name": "After Time Interval",
+            "value": "timeInterval"
+          },
+          {
+            "name": "At Specified Time",
+            "value": "specificTime"
+          },
+          {
+            "name": "On Webhook Call",
+            "value": "webhook"
+          },
+          {
+            "name": "On Form Submitted",
+            "value": "form"
+          }
+        ]
+      },
+      {
+        "displayName": "Authentication",
+        "name": "incomingAuthentication",
+        "type": "options",
+        "default": "none",
+        "description": "If and how incoming resume-webhook-requests to $execution.resumeFormUrl should be authenticated for additional security",
+        "options": [
+          {
+            "name": "Basic Auth",
+            "value": "basicAuth"
+          },
+          {
+            "name": "None",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "displayName": "Authentication",
+        "name": "incomingAuthentication",
+        "type": "options",
+        "default": "none",
+        "description": "If and how incoming resume-webhook-requests to $execution.resumeUrl should be authenticated for additional security",
+        "options": [
+          {
+            "name": "Basic Auth",
+            "value": "basicAuth"
+          },
+          {
+            "name": "Header Auth",
+            "value": "headerAuth"
+          },
+          {
+            "name": "JWT Auth",
+            "value": "jwtAuth"
+          },
+          {
+            "name": "None",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "displayName": "Date and Time",
+        "name": "dateTime",
+        "type": "dateTime",
+        "default": "",
+        "description": "The date and time to wait for before continuing"
+      },
+      {
+        "displayName": "Wait Amount",
+        "name": "amount",
+        "type": "number",
+        "default": "1",
+        "description": "The time to wait"
+      },
+      {
+        "displayName": "Wait Amount",
+        "name": "amount",
+        "type": "number",
+        "default": "5",
+        "description": "The time to wait"
+      },
+      {
+        "displayName": "Wait Unit",
+        "name": "unit",
+        "type": "options",
+        "default": "hours",
+        "description": "The time unit of the Wait Amount value",
+        "options": [
+          {
+            "name": "Seconds",
+            "value": "seconds"
+          },
+          {
+            "name": "Minutes",
+            "value": "minutes"
+          },
+          {
+            "name": "Hours",
+            "value": "hours"
+          },
+          {
+            "name": "Days",
+            "value": "days"
+          }
+        ]
+      },
+      {
+        "displayName": "Wait Unit",
+        "name": "unit",
+        "type": "options",
+        "default": "seconds",
+        "description": "The time unit of the Wait Amount value",
+        "options": [
+          {
+            "name": "Seconds",
+            "value": "seconds"
+          },
+          {
+            "name": "Minutes",
+            "value": "minutes"
+          },
+          {
+            "name": "Hours",
+            "value": "hours"
+          },
+          {
+            "name": "Days",
+            "value": "days"
+          }
+        ]
+      },
+      {
+        "displayName": "Form Title",
+        "name": "formTitle",
+        "type": "string",
+        "default": "",
+        "description": "Shown at the top of the form"
+      },
+      {
+        "displayName": "Form Description",
+        "name": "formDescription",
+        "type": "string",
+        "default": "",
+        "description": "Shown underneath the Form Title. Can be used to prompt the user on how to complete the form. Accepts HTML. Does not accept <code>&lt;script&gt;</code>, <code>&lt;style&gt;</code> or <code>&lt;input&gt;</code> tags."
+      },
+      {
+        "displayName": "Form Elements",
+        "name": "formFields",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Respond When",
+        "name": "responseMode",
+        "type": "options",
+        "default": "onReceived",
+        "description": "When to respond to the form submission",
+        "options": [
+          {
+            "name": "Form Is Submitted",
+            "value": "onReceived"
+          },
+          {
+            "name": "Workflow Finishes",
+            "value": "lastNode"
+          },
+          {
+            "name": "Using 'Respond to Webhook' Node",
+            "value": "responseNode"
+          }
+        ]
+      },
+      {
+        "displayName": "HTTP Method",
+        "name": "httpMethod",
+        "type": "options",
+        "default": "GET",
+        "description": "The HTTP method of the Webhook call",
+        "options": [
+          {
+            "name": "DELETE",
+            "value": "DELETE"
+          },
+          {
+            "name": "GET",
+            "value": "GET"
+          },
+          {
+            "name": "HEAD",
+            "value": "HEAD"
+          },
+          {
+            "name": "PATCH",
+            "value": "PATCH"
+          },
+          {
+            "name": "POST",
+            "value": "POST"
+          },
+          {
+            "name": "PUT",
+            "value": "PUT"
+          }
+        ]
+      },
+      {
+        "displayName": "Response Code",
+        "name": "responseCode",
+        "type": "number",
+        "default": "200",
+        "description": "The HTTP Response code to return"
+      },
+      {
+        "displayName": "Respond",
+        "name": "responseMode",
+        "type": "options",
+        "default": "onReceived",
+        "description": "When and how to respond to the webhook",
+        "options": [
+          {
+            "name": "Immediately",
+            "value": "onReceived"
+          },
+          {
+            "name": "When Last Node Finishes",
+            "value": "lastNode"
+          },
+          {
+            "name": "Using 'Respond to Webhook' Node",
+            "value": "responseNode"
+          }
+        ]
+      },
+      {
+        "displayName": "Response Data",
+        "name": "responseData",
+        "type": "options",
+        "default": "firstEntryJson",
+        "description": "What data should be returned. If it should return all items as an array or only the first item as object.",
+        "options": [
+          {
+            "name": "All Entries",
+            "value": "allEntries"
+          },
+          {
+            "name": "First Entry JSON",
+            "value": "firstEntryJson"
+          },
+          {
+            "name": "First Entry Binary",
+            "value": "firstEntryBinary"
+          },
+          {
+            "name": "No Response Body",
+            "value": "noData"
+          }
+        ]
+      },
+      {
+        "displayName": "Property Name",
+        "name": "responseBinaryPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the binary property to return"
+      },
+      {
+        "displayName": "Limit Wait Time",
+        "name": "limitWaitTime",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether to limit the time this node should wait for a user response before execution resumes"
+      },
+      {
+        "displayName": "Limit Type",
+        "name": "limitType",
+        "type": "options",
+        "default": "afterTimeInterval",
+        "description": "Sets the condition for the execution to resume. Can be a specified date or after some time.",
+        "options": [
+          {
+            "name": "After Time Interval",
+            "value": "afterTimeInterval"
+          },
+          {
+            "name": "At Specified Time",
+            "value": "atSpecifiedTime"
+          }
+        ]
+      },
+      {
+        "displayName": "Amount",
+        "name": "resumeAmount",
+        "type": "number",
+        "default": "1",
+        "description": "The time to wait"
+      },
+      {
+        "displayName": "Unit",
+        "name": "resumeUnit",
+        "type": "options",
+        "default": "hours",
+        "description": "Unit of the interval value",
+        "options": [
+          {
+            "name": "Seconds",
+            "value": "seconds"
+          },
+          {
+            "name": "Minutes",
+            "value": "minutes"
+          },
+          {
+            "name": "Hours",
+            "value": "hours"
+          },
+          {
+            "name": "Days",
+            "value": "days"
+          }
+        ]
+      },
+      {
+        "displayName": "Max Date and Time",
+        "name": "maxDateAndTime",
+        "type": "dateTime",
+        "default": "",
+        "description": "Continue execution after the specified date and time"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Aggregate": {
+    "displayName": "Item Lists",
+    "name": "itemLists",
+    "group": [
+      "input"
+    ],
+    "description": "Helper for working with lists of items and transforming arrays",
+    "properties": [
+      {
+        "displayName": "Operation",
+        "name": "operation",
+        "type": "options",
+        "default": "splitOutItems",
+        "description": "",
+        "options": [
+          {
+            "name": "Concatenate Items",
+            "value": "concatenateItems"
+          },
+          {
+            "name": "Limit",
+            "value": "limit"
+          },
+          {
+            "name": "Remove Duplicates",
+            "value": "removeDuplicates"
+          },
+          {
+            "name": "Sort",
+            "value": "sort"
+          },
+          {
+            "name": "Split Out Items",
+            "value": "splitOutItems"
+          },
+          {
+            "name": "Summarize",
+            "value": "summarize"
+          }
+        ]
+      },
+      {
+        "displayName": "Aggregate",
+        "name": "aggregate",
+        "type": "options",
+        "default": "aggregateIndividualFields",
+        "description": "",
+        "options": [
+          {
+            "name": "Individual Fields",
+            "value": "aggregateIndividualFields"
+          },
+          {
+            "name": "All Item Data (Into a Single List)",
+            "value": "aggregateAllItemData"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Aggregate",
+        "name": "fieldsToAggregate",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Put Output in Field",
+        "name": "destinationFieldName",
+        "type": "string",
+        "default": "data",
+        "description": "The name of the output field to put the data in"
+      },
+      {
+        "displayName": "Include",
+        "name": "include",
+        "type": "options",
+        "default": "allFields",
+        "description": "",
+        "options": [
+          {
+            "name": "All Fields",
+            "value": "allFields"
+          },
+          {
+            "name": "Specified Fields",
+            "value": "specifiedFields"
+          },
+          {
+            "name": "All Fields Except",
+            "value": "allFieldsExcept"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Exclude",
+        "name": "fieldsToExclude",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Fields To Include",
+        "name": "fieldsToInclude",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Max Items",
+        "name": "maxItems",
+        "type": "number",
+        "default": "1",
+        "description": "If there are more items than this number, some are removed"
+      },
+      {
+        "displayName": "Keep",
+        "name": "keep",
+        "type": "options",
+        "default": "firstItems",
+        "description": "When removing items, whether to keep the ones at the start or the ending",
+        "options": [
+          {
+            "name": "First Items",
+            "value": "firstItems"
+          },
+          {
+            "name": "Last Items",
+            "value": "lastItems"
+          }
+        ]
+      },
+      {
+        "displayName": "Compare",
+        "name": "compare",
+        "type": "options",
+        "default": "allFields",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": [
+          {
+            "name": "All Fields",
+            "value": "allFields"
+          },
+          {
+            "name": "All Fields Except",
+            "value": "allFieldsExcept"
+          },
+          {
+            "name": "Selected Fields",
+            "value": "selectedFields"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Exclude",
+        "name": "fieldsToExclude",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input to exclude from the comparison"
+      },
+      {
+        "displayName": "Fields To Compare",
+        "name": "fieldsToCompare",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input to add to the comparison"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Type",
+        "name": "type",
+        "type": "options",
+        "default": "simple",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": [
+          {
+            "name": "Simple",
+            "value": "simple"
+          },
+          {
+            "name": "Random",
+            "value": "random"
+          },
+          {
+            "name": "Code",
+            "value": "code"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Sort By",
+        "name": "sortFieldsUi",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": []
+      },
+      {
+        "displayName": "Code",
+        "name": "code",
+        "type": "string",
+        "default": "// The two items to compare are in the variables a and b\n// Access the fields in a.json and b.json\n// Return -1 if a should go before b\n// Return 1 if b should go before a\n// Return 0 if there's no difference\n\nfieldName = 'myField';\n\nif (a.json[fieldName] < b.json[fieldName]) {\nreturn -1;\n}\nif (a.json[fieldName] > b.json[fieldName]) {\nreturn 1;\n}\nreturn 0;",
+        "description": "Javascript code to determine the order of any two items"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields To Split Out",
+        "name": "fieldToSplitOut",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields to break out into separate items. Separate multiple field names by commas. For binary data, use $binary."
+      },
+      {
+        "displayName": "Include",
+        "name": "include",
+        "type": "options",
+        "default": "noOtherFields",
+        "description": "Whether to copy any other fields into the new items",
+        "options": [
+          {
+            "name": "No Other Fields",
+            "value": "noOtherFields"
+          },
+          {
+            "name": "All Other Fields",
+            "value": "allOtherFields"
+          },
+          {
+            "name": "Selected Other Fields",
+            "value": "selectedOtherFields"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Include",
+        "name": "fieldsToInclude",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input items to aggregate together"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields to Summarize",
+        "name": "fieldsToSummarize",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields to Split By",
+        "name": "fieldsToSplitBy",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields that you want to split the summary by"
+      },
+      {
+        "displayName": "Fields to Group By",
+        "name": "fieldsToSplitBy",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields that you want to split the summary by"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "DateTime": {
+    "displayName": "Date & Time",
+    "name": "dateTime",
+    "group": [
+      "transform"
+    ],
+    "description": "Manipulate date and time values",
+    "properties": [
+      {
+        "displayName": "Operation",
+        "name": "operation",
+        "type": "options",
+        "default": "getCurrentDate",
+        "description": "",
+        "options": [
+          {
+            "name": "Add to a Date",
+            "value": "addToDate"
+          },
+          {
+            "name": "Extract Part of a Date",
+            "value": "extractDate"
+          },
+          {
+            "name": "Format a Date",
+            "value": "formatDate"
+          },
+          {
+            "name": "Get Current Date",
+            "value": "getCurrentDate"
+          },
+          {
+            "name": "Get Time Between Dates",
+            "value": "getTimeBetweenDates"
+          },
+          {
+            "name": "Round a Date",
+            "value": "roundDate"
+          },
+          {
+            "name": "Subtract From a Date",
+            "value": "subtractFromDate"
+          }
+        ]
+      },
+      {
+        "displayName": "Include Current Time",
+        "name": "includeTime",
+        "type": "boolean",
+        "default": "true",
+        "description": "When deactivated, the time will be set to midnight"
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "currentDate",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Date to Add To",
+        "name": "magnitude",
+        "type": "string",
+        "default": "",
+        "description": "The date that you want to change"
+      },
+      {
+        "displayName": "Time Unit to Add",
+        "name": "timeUnit",
+        "type": "options",
+        "default": "days",
+        "description": "Time unit for Duration parameter below",
+        "options": [
+          {
+            "name": "Years",
+            "value": "years"
+          },
+          {
+            "name": "Quarters",
+            "value": "quarters"
+          },
+          {
+            "name": "Months",
+            "value": "months"
+          },
+          {
+            "name": "Weeks",
+            "value": "weeks"
+          },
+          {
+            "name": "Days",
+            "value": "days"
+          },
+          {
+            "name": "Hours",
+            "value": "hours"
+          },
+          {
+            "name": "Minutes",
+            "value": "minutes"
+          },
+          {
+            "name": "Seconds",
+            "value": "seconds"
+          },
+          {
+            "name": "Milliseconds",
+            "value": "milliseconds"
+          }
+        ]
+      },
+      {
+        "displayName": "Duration",
+        "name": "duration",
+        "type": "number",
+        "default": "0",
+        "description": "The number of time units to add to the date"
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "newDate",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Date to Subtract From",
+        "name": "magnitude",
+        "type": "string",
+        "default": "",
+        "description": "The date that you want to change"
+      },
+      {
+        "displayName": "Time Unit to Subtract",
+        "name": "timeUnit",
+        "type": "options",
+        "default": "days",
+        "description": "Time unit for Duration parameter below",
+        "options": [
+          {
+            "name": "Years",
+            "value": "years"
+          },
+          {
+            "name": "Quarters",
+            "value": "quarters"
+          },
+          {
+            "name": "Months",
+            "value": "months"
+          },
+          {
+            "name": "Weeks",
+            "value": "weeks"
+          },
+          {
+            "name": "Days",
+            "value": "days"
+          },
+          {
+            "name": "Hours",
+            "value": "hours"
+          },
+          {
+            "name": "Minutes",
+            "value": "minutes"
+          },
+          {
+            "name": "Seconds",
+            "value": "seconds"
+          },
+          {
+            "name": "Milliseconds",
+            "value": "milliseconds"
+          }
+        ]
+      },
+      {
+        "displayName": "Duration",
+        "name": "duration",
+        "type": "number",
+        "default": "0",
+        "description": "The number of time units to subtract from the date"
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "newDate",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Date",
+        "name": "date",
+        "type": "string",
+        "default": "",
+        "description": "The date that you want to format"
+      },
+      {
+        "displayName": "Format",
+        "name": "format",
+        "type": "options",
+        "default": "MM/dd/yyyy",
+        "description": "The format to convert the date to",
+        "options": [
+          {
+            "name": "Custom Format",
+            "value": "custom"
+          },
+          {
+            "name": "MM/DD/YYYY",
+            "value": "MM/dd/yyyy"
+          },
+          {
+            "name": "YYYY/MM/DD",
+            "value": "yyyy/MM/dd"
+          },
+          {
+            "name": "MMMM DD YYYY",
+            "value": "MMMM dd yyyy"
+          },
+          {
+            "name": "MM-DD-YYYY",
+            "value": "MM-dd-yyyy"
+          },
+          {
+            "name": "YYYY-MM-DD",
+            "value": "yyyy-MM-dd"
+          },
+          {
+            "name": "Unix Timestamp",
+            "value": "X"
+          },
+          {
+            "name": "Unix Ms Timestamp",
+            "value": "x"
+          }
+        ]
+      },
+      {
+        "displayName": "Custom Format",
+        "name": "customFormat",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "formattedDate",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Date",
+        "name": "date",
+        "type": "string",
+        "default": "",
+        "description": "The date that you want to round"
+      },
+      {
+        "displayName": "Mode",
+        "name": "mode",
+        "type": "options",
+        "default": "roundDown",
+        "description": "",
+        "options": [
+          {
+            "name": "Round Down",
+            "value": "roundDown"
+          },
+          {
+            "name": "Round Up",
+            "value": "roundUp"
+          }
+        ]
+      },
+      {
+        "displayName": "To Nearest",
+        "name": "toNearest",
+        "type": "options",
+        "default": "month",
+        "description": "",
+        "options": [
+          {
+            "name": "Year",
+            "value": "year"
+          },
+          {
+            "name": "Month",
+            "value": "month"
+          },
+          {
+            "name": "Week",
+            "value": "week"
+          },
+          {
+            "name": "Day",
+            "value": "day"
+          },
+          {
+            "name": "Hour",
+            "value": "hour"
+          },
+          {
+            "name": "Minute",
+            "value": "minute"
+          },
+          {
+            "name": "Second",
+            "value": "second"
+          }
+        ]
+      },
+      {
+        "displayName": "To",
+        "name": "to",
+        "type": "options",
+        "default": "month",
+        "description": "",
+        "options": [
+          {
+            "name": "End of Month",
+            "value": "month"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "roundedDate",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Start Date",
+        "name": "startDate",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "End Date",
+        "name": "endDate",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Units",
+        "name": "units",
+        "type": "multiOptions",
+        "default": "day",
+        "description": "",
+        "options": [
+          {
+            "name": "Year",
+            "value": "year"
+          },
+          {
+            "name": "Month",
+            "value": "month"
+          },
+          {
+            "name": "Week",
+            "value": "week"
+          },
+          {
+            "name": "Day",
+            "value": "day"
+          },
+          {
+            "name": "Hour",
+            "value": "hour"
+          },
+          {
+            "name": "Minute",
+            "value": "minute"
+          },
+          {
+            "name": "Second",
+            "value": "second"
+          },
+          {
+            "name": "Millisecond",
+            "value": "millisecond"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "timeDifference",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Date",
+        "name": "date",
+        "type": "string",
+        "default": "",
+        "description": "The date that you want to round"
+      },
+      {
+        "displayName": "Part",
+        "name": "part",
+        "type": "options",
+        "default": "month",
+        "description": "",
+        "options": [
+          {
+            "name": "Year",
+            "value": "year"
+          },
+          {
+            "name": "Month",
+            "value": "month"
+          },
+          {
+            "name": "Week",
+            "value": "week"
+          },
+          {
+            "name": "Day",
+            "value": "day"
+          },
+          {
+            "name": "Hour",
+            "value": "hour"
+          },
+          {
+            "name": "Minute",
+            "value": "minute"
+          },
+          {
+            "name": "Second",
+            "value": "second"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Field Name",
+        "name": "outputFieldName",
+        "type": "string",
+        "default": "datePart",
+        "description": "Name of the field to put the output in"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Crypto": {
+    "displayName": "Crypto",
+    "name": "crypto",
+    "group": [
+      "transform"
+    ],
+    "description": "Provide cryptographic utilities",
+    "properties": [
+      {
+        "displayName": "Action",
+        "name": "action",
+        "type": "options",
+        "default": "hash",
+        "description": "",
+        "options": [
+          {
+            "name": "Generate",
+            "value": "generate"
+          },
+          {
+            "name": "Hash",
+            "value": "hash"
+          },
+          {
+            "name": "Hmac",
+            "value": "hmac"
+          },
+          {
+            "name": "Sign",
+            "value": "sign"
+          }
+        ]
+      },
+      {
+        "displayName": "Binary File",
+        "name": "binaryData",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the data to hashed should be taken from binary field"
+      },
+      {
+        "displayName": "Binary Property Name",
+        "name": "binaryPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the binary property which contains the input data"
+      },
+      {
+        "displayName": "Type",
+        "name": "type",
+        "type": "options",
+        "default": "SHA256",
+        "description": "The hash type to use",
+        "options": [
+          {
+            "name": "MD5",
+            "value": "MD5"
+          },
+          {
+            "name": "SHA256",
+            "value": "SHA256"
+          },
+          {
+            "name": "SHA3-256",
+            "value": "SHA3-256"
+          },
+          {
+            "name": "SHA3-384",
+            "value": "SHA3-384"
+          },
+          {
+            "name": "SHA3-512",
+            "value": "SHA3-512"
+          },
+          {
+            "name": "SHA384",
+            "value": "SHA384"
+          },
+          {
+            "name": "SHA512",
+            "value": "SHA512"
+          }
+        ]
+      },
+      {
+        "displayName": "Value",
+        "name": "value",
+        "type": "string",
+        "default": "",
+        "description": "The value that should be hashed"
+      },
+      {
+        "displayName": "Property Name",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the property to which to write the hash"
+      },
+      {
+        "displayName": "Encoding",
+        "name": "encoding",
+        "type": "options",
+        "default": "hex",
+        "description": "",
+        "options": [
+          {
+            "name": "BASE64",
+            "value": "base64"
+          },
+          {
+            "name": "HEX",
+            "value": "hex"
+          }
+        ]
+      },
+      {
+        "displayName": "Type",
+        "name": "type",
+        "type": "options",
+        "default": "SHA256",
+        "description": "The hash type to use",
+        "options": [
+          {
+            "name": "MD5",
+            "value": "MD5"
+          },
+          {
+            "name": "SHA256",
+            "value": "SHA256"
+          },
+          {
+            "name": "SHA3-256",
+            "value": "SHA3-256"
+          },
+          {
+            "name": "SHA3-384",
+            "value": "SHA3-384"
+          },
+          {
+            "name": "SHA3-512",
+            "value": "SHA3-512"
+          },
+          {
+            "name": "SHA384",
+            "value": "SHA384"
+          },
+          {
+            "name": "SHA512",
+            "value": "SHA512"
+          }
+        ]
+      },
+      {
+        "displayName": "Value",
+        "name": "value",
+        "type": "string",
+        "default": "",
+        "description": "The value of which the hmac should be created"
+      },
+      {
+        "displayName": "Property Name",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the property to which to write the hmac"
+      },
+      {
+        "displayName": "Encoding",
+        "name": "encoding",
+        "type": "options",
+        "default": "hex",
+        "description": "",
+        "options": [
+          {
+            "name": "BASE64",
+            "value": "base64"
+          },
+          {
+            "name": "HEX",
+            "value": "hex"
+          }
+        ]
+      },
+      {
+        "displayName": "Value",
+        "name": "value",
+        "type": "string",
+        "default": "",
+        "description": "The value that should be signed"
+      },
+      {
+        "displayName": "Property Name",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the property to which to write the signed value"
+      },
+      {
+        "displayName": "Algorithm Name or ID",
+        "name": "algorithm",
+        "type": "options",
+        "default": "",
+        "description": "Choose from the list, or specify an ID using an <a href=\"https://docs.n8n.io/code/expressions/\">expression</a>",
+        "options": [
+          {
+            "name": "RSA-MD5",
+            "value": "RSA-MD5"
+          },
+          {
+            "name": "RSA-RIPEMD160",
+            "value": "RSA-RIPEMD160"
+          },
+          {
+            "name": "RSA-SHA1",
+            "value": "RSA-SHA1"
+          },
+          {
+            "name": "RSA-SHA1-2",
+            "value": "RSA-SHA1-2"
+          },
+          {
+            "name": "RSA-SHA224",
+            "value": "RSA-SHA224"
+          },
+          {
+            "name": "RSA-SHA256",
+            "value": "RSA-SHA256"
+          },
+          {
+            "name": "RSA-SHA3-224",
+            "value": "RSA-SHA3-224"
+          },
+          {
+            "name": "RSA-SHA3-256",
+            "value": "RSA-SHA3-256"
+          },
+          {
+            "name": "RSA-SHA3-384",
+            "value": "RSA-SHA3-384"
+          },
+          {
+            "name": "RSA-SHA3-512",
+            "value": "RSA-SHA3-512"
+          },
+          {
+            "name": "RSA-SHA384",
+            "value": "RSA-SHA384"
+          },
+          {
+            "name": "RSA-SHA512",
+            "value": "RSA-SHA512"
+          },
+          {
+            "name": "RSA-SHA512/224",
+            "value": "RSA-SHA512/224"
+          },
+          {
+            "name": "RSA-SHA512/256",
+            "value": "RSA-SHA512/256"
+          },
+          {
+            "name": "RSA-SM3",
+            "value": "RSA-SM3"
+          },
+          {
+            "name": "blake2b512",
+            "value": "blake2b512"
+          },
+          {
+            "name": "blake2s256",
+            "value": "blake2s256"
+          },
+          {
+            "name": "id-rsassa-pkcs1-v1_5-with-sha3-224",
+            "value": "id-rsassa-pkcs1-v1_5-with-sha3-224"
+          },
+          {
+            "name": "id-rsassa-pkcs1-v1_5-with-sha3-256",
+            "value": "id-rsassa-pkcs1-v1_5-with-sha3-256"
+          },
+          {
+            "name": "id-rsassa-pkcs1-v1_5-with-sha3-384",
+            "value": "id-rsassa-pkcs1-v1_5-with-sha3-384"
+          },
+          {
+            "name": "id-rsassa-pkcs1-v1_5-with-sha3-512",
+            "value": "id-rsassa-pkcs1-v1_5-with-sha3-512"
+          },
+          {
+            "name": "md5",
+            "value": "md5"
+          },
+          {
+            "name": "md5-sha1",
+            "value": "md5-sha1"
+          },
+          {
+            "name": "md5WithRSAEncryption",
+            "value": "md5WithRSAEncryption"
+          },
+          {
+            "name": "ripemd",
+            "value": "ripemd"
+          },
+          {
+            "name": "ripemd160",
+            "value": "ripemd160"
+          },
+          {
+            "name": "ripemd160WithRSA",
+            "value": "ripemd160WithRSA"
+          },
+          {
+            "name": "rmd160",
+            "value": "rmd160"
+          },
+          {
+            "name": "sha1",
+            "value": "sha1"
+          },
+          {
+            "name": "sha1WithRSAEncryption",
+            "value": "sha1WithRSAEncryption"
+          },
+          {
+            "name": "sha224",
+            "value": "sha224"
+          },
+          {
+            "name": "sha224WithRSAEncryption",
+            "value": "sha224WithRSAEncryption"
+          },
+          {
+            "name": "sha256",
+            "value": "sha256"
+          },
+          {
+            "name": "sha256WithRSAEncryption",
+            "value": "sha256WithRSAEncryption"
+          },
+          {
+            "name": "sha3-224",
+            "value": "sha3-224"
+          },
+          {
+            "name": "sha3-256",
+            "value": "sha3-256"
+          },
+          {
+            "name": "sha3-384",
+            "value": "sha3-384"
+          },
+          {
+            "name": "sha3-512",
+            "value": "sha3-512"
+          },
+          {
+            "name": "sha384",
+            "value": "sha384"
+          },
+          {
+            "name": "sha384WithRSAEncryption",
+            "value": "sha384WithRSAEncryption"
+          },
+          {
+            "name": "sha512",
+            "value": "sha512"
+          },
+          {
+            "name": "sha512-224",
+            "value": "sha512-224"
+          },
+          {
+            "name": "sha512-224WithRSAEncryption",
+            "value": "sha512-224WithRSAEncryption"
+          },
+          {
+            "name": "sha512-256",
+            "value": "sha512-256"
+          },
+          {
+            "name": "sha512-256WithRSAEncryption",
+            "value": "sha512-256WithRSAEncryption"
+          },
+          {
+            "name": "sha512WithRSAEncryption",
+            "value": "sha512WithRSAEncryption"
+          },
+          {
+            "name": "shake128",
+            "value": "shake128"
+          },
+          {
+            "name": "shake256",
+            "value": "shake256"
+          },
+          {
+            "name": "sm3",
+            "value": "sm3"
+          },
+          {
+            "name": "sm3WithRSAEncryption",
+            "value": "sm3WithRSAEncryption"
+          },
+          {
+            "name": "ssl3-md5",
+            "value": "ssl3-md5"
+          },
+          {
+            "name": "ssl3-sha1",
+            "value": "ssl3-sha1"
+          }
+        ]
+      },
+      {
+        "displayName": "Encoding",
+        "name": "encoding",
+        "type": "options",
+        "default": "hex",
+        "description": "",
+        "options": [
+          {
+            "name": "BASE64",
+            "value": "base64"
+          },
+          {
+            "name": "HEX",
+            "value": "hex"
+          }
+        ]
+      },
+      {
+        "displayName": "Property Name",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the property to which to write the random string"
+      },
+      {
+        "displayName": "Type",
+        "name": "encodingType",
+        "type": "options",
+        "default": "uuid",
+        "description": "Encoding that will be used to generate string",
+        "options": [
+          {
+            "name": "ASCII",
+            "value": "ascii"
+          },
+          {
+            "name": "BASE64",
+            "value": "base64"
+          },
+          {
+            "name": "HEX",
+            "value": "hex"
+          },
+          {
+            "name": "UUID",
+            "value": "uuid"
+          }
+        ]
+      },
+      {
+        "displayName": "Length",
+        "name": "stringLength",
+        "type": "number",
+        "default": "32",
+        "description": "Length of the generated string"
+      }
+    ]
+  },
+  "HtmlExtract": {
+    "displayName": "HTML Extract",
+    "name": "htmlExtract",
+    "group": [
+      "transform"
+    ],
+    "description": "Extracts data from HTML",
+    "properties": [
+      {
+        "displayName": "Source Data",
+        "name": "sourceData",
+        "type": "options",
+        "default": "json",
+        "description": "If HTML should be read from binary or JSON data",
+        "options": [
+          {
+            "name": "Binary",
+            "value": "binary"
+          },
+          {
+            "name": "JSON",
+            "value": "json"
+          }
+        ]
+      },
+      {
+        "displayName": "Input Binary Field",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": ""
+      },
+      {
+        "displayName": "JSON Property",
+        "name": "dataPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "Name of the JSON property in which the HTML to extract the data from can be found. The property can either contain a string or an array of strings."
+      },
+      {
+        "displayName": "Extraction Values",
+        "name": "extractionValues",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  },
+  "Compression": {
+    "displayName": "Compression",
+    "name": "compression",
+    "group": [
+      "transform"
+    ],
+    "description": "Compress and decompress files",
+    "properties": [
+      {
+        "displayName": "Operation",
+        "name": "operation",
+        "type": "options",
+        "default": "decompress",
+        "description": "",
+        "options": [
+          {
+            "name": "Compress",
+            "value": "compress"
+          },
+          {
+            "name": "Decompress",
+            "value": "decompress"
+          }
+        ]
+      },
+      {
+        "displayName": "Input Binary Field(s)",
+        "name": "binaryPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "To process more than one file, use a comma-separated list of the binary fields names"
+      },
+      {
+        "displayName": "Input Binary Field(s)",
+        "name": "binaryPropertyName",
+        "type": "string",
+        "default": "data",
+        "description": "To process more than one file, use a comma-separated list of the binary fields names"
+      },
+      {
+        "displayName": "Output Format",
+        "name": "outputFormat",
+        "type": "options",
+        "default": "",
+        "description": "Format of the output",
+        "options": [
+          {
+            "name": "Gzip",
+            "value": "gzip"
+          },
+          {
+            "name": "Zip",
+            "value": "zip"
+          }
+        ]
+      },
+      {
+        "displayName": "Output Format",
+        "name": "outputFormat",
+        "type": "options",
+        "default": "zip",
+        "description": "Format of the output",
+        "options": [
+          {
+            "name": "Gzip",
+            "value": "gzip"
+          },
+          {
+            "name": "Zip",
+            "value": "zip"
+          }
+        ]
+      },
+      {
+        "displayName": "File Name",
+        "name": "fileName",
+        "type": "string",
+        "default": "",
+        "description": "Name of the output file"
+      },
+      {
+        "displayName": "Put Output File in Field",
+        "name": "binaryPropertyOutput",
+        "type": "string",
+        "default": "data",
+        "description": ""
+      },
+      {
+        "displayName": "File Name",
+        "name": "fileName",
+        "type": "string",
+        "default": "",
+        "description": "Name of the output file"
+      },
+      {
+        "displayName": "Put Output File in Field",
+        "name": "binaryPropertyOutput",
+        "type": "string",
+        "default": "data",
+        "description": ""
+      },
+      {
+        "displayName": "Output File Prefix",
+        "name": "outputPrefix",
+        "type": "string",
+        "default": "data",
+        "description": "Prefix to add to the gzip file"
+      },
+      {
+        "displayName": "Output Prefix",
+        "name": "outputPrefix",
+        "type": "string",
+        "default": "file_",
+        "description": "Prefix to add to the decompressed files"
+      }
+    ]
+  },
+  "ItemLists": {
+    "displayName": "Item Lists",
+    "name": "itemLists",
+    "group": [
+      "input"
+    ],
+    "description": "Helper for working with lists of items and transforming arrays",
+    "properties": [
+      {
+        "displayName": "Operation",
+        "name": "operation",
+        "type": "options",
+        "default": "splitOutItems",
+        "description": "",
+        "options": [
+          {
+            "name": "Concatenate Items",
+            "value": "concatenateItems"
+          },
+          {
+            "name": "Limit",
+            "value": "limit"
+          },
+          {
+            "name": "Remove Duplicates",
+            "value": "removeDuplicates"
+          },
+          {
+            "name": "Sort",
+            "value": "sort"
+          },
+          {
+            "name": "Split Out Items",
+            "value": "splitOutItems"
+          },
+          {
+            "name": "Summarize",
+            "value": "summarize"
+          }
+        ]
+      },
+      {
+        "displayName": "Aggregate",
+        "name": "aggregate",
+        "type": "options",
+        "default": "aggregateIndividualFields",
+        "description": "",
+        "options": [
+          {
+            "name": "Individual Fields",
+            "value": "aggregateIndividualFields"
+          },
+          {
+            "name": "All Item Data (Into a Single List)",
+            "value": "aggregateAllItemData"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Aggregate",
+        "name": "fieldsToAggregate",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Put Output in Field",
+        "name": "destinationFieldName",
+        "type": "string",
+        "default": "data",
+        "description": "The name of the output field to put the data in"
+      },
+      {
+        "displayName": "Include",
+        "name": "include",
+        "type": "options",
+        "default": "allFields",
+        "description": "",
+        "options": [
+          {
+            "name": "All Fields",
+            "value": "allFields"
+          },
+          {
+            "name": "Specified Fields",
+            "value": "specifiedFields"
+          },
+          {
+            "name": "All Fields Except",
+            "value": "allFieldsExcept"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Exclude",
+        "name": "fieldsToExclude",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Fields To Include",
+        "name": "fieldsToInclude",
+        "type": "string",
+        "default": "",
+        "description": ""
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Max Items",
+        "name": "maxItems",
+        "type": "number",
+        "default": "1",
+        "description": "If there are more items than this number, some are removed"
+      },
+      {
+        "displayName": "Keep",
+        "name": "keep",
+        "type": "options",
+        "default": "firstItems",
+        "description": "When removing items, whether to keep the ones at the start or the ending",
+        "options": [
+          {
+            "name": "First Items",
+            "value": "firstItems"
+          },
+          {
+            "name": "Last Items",
+            "value": "lastItems"
+          }
+        ]
+      },
+      {
+        "displayName": "Compare",
+        "name": "compare",
+        "type": "options",
+        "default": "allFields",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": [
+          {
+            "name": "All Fields",
+            "value": "allFields"
+          },
+          {
+            "name": "All Fields Except",
+            "value": "allFieldsExcept"
+          },
+          {
+            "name": "Selected Fields",
+            "value": "selectedFields"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Exclude",
+        "name": "fieldsToExclude",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input to exclude from the comparison"
+      },
+      {
+        "displayName": "Fields To Compare",
+        "name": "fieldsToCompare",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input to add to the comparison"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Type",
+        "name": "type",
+        "type": "options",
+        "default": "simple",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": [
+          {
+            "name": "Simple",
+            "value": "simple"
+          },
+          {
+            "name": "Random",
+            "value": "random"
+          },
+          {
+            "name": "Code",
+            "value": "code"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Sort By",
+        "name": "sortFieldsUi",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "The fields of the input items to compare to see if they are the same",
+        "options": []
+      },
+      {
+        "displayName": "Code",
+        "name": "code",
+        "type": "string",
+        "default": "// The two items to compare are in the variables a and b\n// Access the fields in a.json and b.json\n// Return -1 if a should go before b\n// Return 1 if b should go before a\n// Return 0 if there's no difference\n\nfieldName = 'myField';\n\nif (a.json[fieldName] < b.json[fieldName]) {\nreturn -1;\n}\nif (a.json[fieldName] > b.json[fieldName]) {\nreturn 1;\n}\nreturn 0;",
+        "description": "Javascript code to determine the order of any two items"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields To Split Out",
+        "name": "fieldToSplitOut",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields to break out into separate items. Separate multiple field names by commas. For binary data, use $binary."
+      },
+      {
+        "displayName": "Include",
+        "name": "include",
+        "type": "options",
+        "default": "noOtherFields",
+        "description": "Whether to copy any other fields into the new items",
+        "options": [
+          {
+            "name": "No Other Fields",
+            "value": "noOtherFields"
+          },
+          {
+            "name": "All Other Fields",
+            "value": "allOtherFields"
+          },
+          {
+            "name": "Selected Other Fields",
+            "value": "selectedOtherFields"
+          }
+        ]
+      },
+      {
+        "displayName": "Fields To Include",
+        "name": "fieldsToInclude",
+        "type": "string",
+        "default": "",
+        "description": "Fields in the input items to aggregate together"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields to Summarize",
+        "name": "fieldsToSummarize",
+        "type": "fixedCollection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      },
+      {
+        "displayName": "Fields to Split By",
+        "name": "fieldsToSplitBy",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields that you want to split the summary by"
+      },
+      {
+        "displayName": "Fields to Group By",
+        "name": "fieldsToSplitBy",
+        "type": "string",
+        "default": "",
+        "description": "The name of the input fields that you want to split the summary by"
+      },
+      {
+        "displayName": "Options",
+        "name": "options",
+        "type": "collection",
+        "default": "[object Object]",
+        "description": "",
+        "options": []
+      }
+    ]
+  }
+}

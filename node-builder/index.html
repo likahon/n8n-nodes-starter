@@ -14,15 +14,15 @@
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="logo">
-                <span class="logo-icon">⬡</span>
-                <span class="logo-text">Node Builder</span>
+                <img src="https://n8n.io/favicon.ico" class="logo-img" alt="n8n">
+                <span class="logo-text">n8n Node Builder</span>
             </div>
         </div>
 
         <!-- Nav -->
         <nav class="sidebar-nav">
             <button class="nav-item active" data-section="editor">
-                <span class="nav-icon">✦</span> Editor
+                <span class="nav-icon">✦</span> Editor de Nodos
             </button>
             <button class="nav-item" data-section="deploy">
                 <span class="nav-icon">↑</span> Importar
@@ -48,9 +48,17 @@
                 <p class="section-label">N8N CORE</p>
                 <ul id="core-nodes-list" class="node-list"></ul>
             </div>
-            <div class="sidebar-footer">
-                <button id="new-node-btn" class="btn-new" onclick="createNewNode()">+ Nuevo nodo</button>
+        <div class="sidebar-footer">
+            <div class="theme-toggle">
+                <span class="theme-label">☀️</span>
+                <label class="toggle">
+                    <input type="checkbox" id="theme-switch" onchange="toggleTheme(this.checked)">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="theme-label">🌙</span>
             </div>
+            <button id="new-node-btn" class="btn-new" onclick="createNewNode()">+ Nuevo nodo</button>
+        </div>
         </div>
     </aside>
 
@@ -67,6 +75,12 @@
             </div>
 
             <div id="node-editor" class="node-editor hidden">
+                <!-- Banner nodo core (read-only) -->
+                <div id="core-banner" class="core-banner hidden">
+                    <span id="core-banner-text">Nodo oficial de n8n — solo lectura</span>
+                    <button class="btn-primary" id="core-banner-btn" onclick="useAsBase()">Crear mi propio nodo de <strong id="core-banner-name"></strong></button>
+                </div>
+
                 <div class="editor-topbar">
                     <div class="editor-breadcrumb">
                         <span id="editor-badge" class="badge">Nuevo</span>
@@ -161,6 +175,21 @@
                             <button class="btn-copy" onclick="copyCode()">Copiar</button>
                         </div>
                         <pre class="code-block"><code id="generated-code">// El código aparecerá aquí</code></pre>
+                    </div>
+
+                    <div class="json-import-panel" id="json-import-panel">
+                        <div class="code-panel-header">
+                            <span>Importar JSON de n8n</span>
+                            <button class="btn-copy" onclick="applyNodeJson()">Aplicar</button>
+                        </div>
+                        <textarea id="json-import-input" class="json-import-textarea" placeholder='Pegá acá el JSON del nodo de n8n...
+
+Ejemplo:
+{
+  "parameters": { ... },
+  "type": "n8n-nodes-base.httpRequest",
+  ...
+}'></textarea>
                     </div>
                 </div>
             </div>
@@ -331,20 +360,17 @@
     </main>
 </div>
 
-<!-- Modal: usar nodo core como base -->
-<div id="core-modal" class="modal-overlay hidden">
+<!-- Modal: confirmación -->
+<div id="confirm-modal" class="modal-overlay hidden">
     <div class="modal">
-        <div class="modal-icon">⬡</div>
-        <h3 id="modal-node-name">HttpRequest</h3>
-        <p>Este es un nodo oficial de n8n. ¿Querés usarlo como base para crear uno nuevo?</p>
+        <h3 id="confirm-title">Confirmar</h3>
+        <p id="confirm-message"></p>
         <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
-            <button class="btn-primary" onclick="useAsBase()">Usar como base</button>
+            <button class="btn-ghost" onclick="confirmResolve(false)">Cancelar</button>
+            <button class="btn-danger" onclick="confirmResolve(true)">Eliminar</button>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+</div></script>
 <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
 <script src="app.js"></script>
 </body>
